@@ -1,0 +1,10 @@
+24 Jan 2014 - Finished convolutions scripts for segmentation, need to down
+sample the image: 77 filters by H*w*3 is computational tasking.  To do: finish
+downsampling: will try uniform sampling of points to convolve. 1000 points per
+image should be more than enough I think. 
+
+25 Jan 2014 - Downsampled by just randomly picking points out of the convolutions,
+not super ideal since it would be better to avoid calculations on points that
+are not used. Something for later potentially/going to try to get it up tonight
+so that some training for the CRF can happen tomorrow. In between everything I plan
+to write my interim report.

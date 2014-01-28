@@ -1,0 +1,78 @@
+Neural Network Toolbox in Python
+
+Yujia Li, 03/2013
+
+------------------------------------------------------------------------------
+
+07/23/2013
+
+Finished moving the code to GPUs through gnumpy.
+- One problem remains: gnumpy's single precision makes finite difference
+  computation really imprecise
+
+Multiclass hinge loss is still quite slow:
+- the bottleneck is the loss-augmented inference, which is not easy to
+  implement on GPUs
+
+
+07/22/2013
+
+Finished the first version of the nn code. It supports linear and softmax
+output units. It also supports logistic sigmoid, tanh and relu activation
+functions for intermediate units. The gradients for these units have passed
+check_grad.
+
+First version complete. Now the toolbox supports all output types, including:
+linear, softmax, hinge, one-versus-all hinge and multi-class hinge. All passed
+check_grad test.
+
+Next step:
+- change the code so it can use GPU
+- further clean up is necessary before doing this
+
+
+07/22/2013
+
+vec_to_mat should be associated with output type.
+
+Every layer should be padded by a bias term - this need to be fixed.
+
+
+07/15/2013
+
+Decided to redesign the code, especially the layer type definition part.
+- Each type of layers is an object, defining functions like 'forward',
+  'derivative', etc.
+- A type parser parses the type description and returns an instance of the
+  type object - they can also be made to be singletons (but unfortunately
+  python don't support singletons very well).
+
+Things need to change:
+- util #132
+- nn #50 #54
+
+
+06/11/2013
+
+Going back to this toolbox, try to finish it.
+
+Updated the activation type part - now choosing one activation is easy, no
+more if statements.
+
+
+03/12/2013
+
+Design:
+- A net is a list of layers, each layer has its own weights and activation
+  functions, the weights are learned using data in minibatches
+- Each layer has a weight matrix and a type of activation function. When fed
+  with input data from the layer below, it computes the activation and output
+  for the layer above.
+- When fed with the gradient of the outputs in the layer above, a layer
+  computes the gradient of the outputs for the layer below, as well as the
+  gradient for current layer of weights.
+- Extensions: drop-out, sparsity, weight-decay, etc.
+
+Try numpy first, then transition my code to GPU. To make each layer
+configurable, it is necessary to take a layered design.
+
